@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchCitySuggestions } from "./citiesThunks";
+import { fetchCitySuggestions } from "./citiesThunk";
 
 
 const DEFAULT_CITIES = [

@@ -3,6 +3,7 @@ import CityGrid from "../components/CityGrid";
 import Header from "../components/Header";
 import { useEffect } from "react";
 import { fetchCurrentWeather } from "../features/weather/weatherThunk";
+import CitySearch from "../components/CitySearch";
 
 const DashboardPage = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const DashboardPage = () => {
     <>
       <div className="min-h-screen bg-gray-50">
         <Header />
+        <CitySearch />
         <CityGrid />
       </div>
     </>
