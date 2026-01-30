@@ -1,5 +1,11 @@
+import DashboardPage from "./pages/DashboardPage";
+
 const App = () => {
-  return <div className="text-2xl"> App</div>;
+  return (
+    <>
+      <DashboardPage />
+    </>
+  );
 };
 
 export default App;
