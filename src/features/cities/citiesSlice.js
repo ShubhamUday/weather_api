@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchCitySuggestions } from "./citiesThunks";
+
 
 const DEFAULT_CITIES = [
   { id: "nyc", name: "New York", country: "US", lat: 40.7128, lon: -74.006 },
@@ -12,7 +14,12 @@ const citiesSlice = createSlice({
   name: "cities",
   initialState: {
     list: DEFAULT_CITIES,
-    favorites: [] // store city ids
+    favorites: [], // store city ids
+    search: {
+      results: [],
+      loading: false,
+      error: null
+    }
   },
   reducers: {
     toggleFavorite(state, action) {
@@ -24,7 +31,23 @@ const citiesSlice = createSlice({
     addCity(state, action) {
       state.list.push(action.payload);
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchCitySuggestions.pending, state => {
+        state.search.loading = true;
+        state.search.error = null;
+      })
+      .addCase(fetchCitySuggestions.fulfilled, (state, action) => {
+        state.search.loading = false;
+        state.search.results = action.payload;
+      })
+      .addCase(fetchCitySuggestions.rejected, (state, action) => {
+        state.search.loading = false;
+        state.search.error = action.payload;
+      });
   }
+
 });
 
 export const { toggleFavorite, addCity } = citiesSlice.actions;
