@@ -10,7 +10,7 @@ export const getCurrentWeather = async ({ lat, lon, units }) => {
 
 // Forecast for charts & detail view
 export const getForecast = async ({ lat, lon, units }) => {
-    const { data } = await weatherAPI.get("/data/3.0/onecall", {
+    const { data } = await weatherAPI.get("/data/2.5/forecast", {
         params: {
             lat,
             lon,
@@ -32,5 +32,3 @@ export const searchCities = async (query) => {
     });
     return data;
 };
-
-// https://api.openweathermap.org/data/3.0/onecall
