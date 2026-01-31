@@ -1,9 +1,17 @@
+import { useDispatch } from "react-redux";
+import { openCityDetail } from "../features/ui/uiSlice";
+
 const CityCard = ({ city, weather }) => {
+  const dispatch = useDispatch();
+
   if (!weather) return null;
 
   return (
     <>
-      <div className="bg-white rounded-xl p-4 shadow hover:shadow-md transition cursor-pointer">
+      <div
+        onClick={() => dispatch(openCityDetail(city.id))}
+        className="bg-white rounded-xl p-4 shadow hover:shadow-md transition cursor-pointer"
+      >
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-medium">
             {city.name}, {city.country}
