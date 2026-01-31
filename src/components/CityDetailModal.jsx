@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { closeCityDetail } from "../features/ui/uiSlice";
-// import HourlyChart from "./HourlyChart";
-// import DailyChart from "./DailyChart";
+import HourlyChart from "./HourlyChart";
 
 const CityDetailModal = () => {
   const dispatch = useDispatch();
@@ -34,8 +33,7 @@ const CityDetailModal = () => {
 
         {data && (
           <>
-            {/* <HourlyChart data={data.hourly} /> */}
-            {/* <DailyChart data={data.daily} /> */}
+            <HourlyChart data={data.list} />
           </>
         )}
       </div>
