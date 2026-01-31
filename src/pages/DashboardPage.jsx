@@ -29,6 +29,16 @@ const DashboardPage = () => {
     dispatch(fetchForecast({ city, units: unit }));
   }, [activeCityId, unit, dispatch, cities]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      cities.forEach((city) => {
+        dispatch(fetchCurrentWeather({ city, units: unit }));
+      });
+    }, 60_000);
+
+    return () => clearInterval(interval);
+  }, [dispatch, cities, unit]);
+
   return (
     <>
       <div className="min-h-screen bg-gray-50">

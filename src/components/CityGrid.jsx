@@ -13,7 +13,11 @@ const CityGrid = () => {
           loading && !current[city.id] ? (
             <LoadingCard key={city.id} />
           ) : (
-            <CityCard key={city.id} city={city} weather={current[city.id]} />
+            <CityCard
+              key={city.id}
+              city={city}
+              weather={current[city.id]?.data}
+            />
           ),
         )}
       </div>
