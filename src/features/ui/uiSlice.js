@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const storedUnit = localStorage.getItem("unit");
+
 const uiSlice = createSlice({
     name: "ui",
     initialState: {
-        unit: "metric", // metric | imperial
+        unit: storedUnit || "metric", // metric | imperial
         activeCityId: null,
         isDetailOpen: false
     },

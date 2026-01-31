@@ -10,11 +10,15 @@ const DEFAULT_CITIES = [
   { id: "cpt", name: "Cape Town", country: "ZA", lat: -33.9249, lon: 18.4241 }
 ];
 
+const storedFavorites = JSON.parse(
+  localStorage.getItem("favorites") || "[]"
+);
+
 const citiesSlice = createSlice({
   name: "cities",
   initialState: {
     list: DEFAULT_CITIES,
-    favorites: [], // store city ids
+    favorites: storedFavorites,
     search: {
       results: [],
       loading: false,

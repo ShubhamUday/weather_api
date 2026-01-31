@@ -1,24 +1,36 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "../features/cities/citiesSlice";
 import { openCityDetail } from "../features/ui/uiSlice";
 
 const CityCard = ({ city, weather }) => {
   const dispatch = useDispatch();
+  const favorites = useSelector((state) => state.cities.favorites);
+  const isFavorite = favorites.includes(city.id);
 
-  if (!weather) return null;
+  if (!weather || !weather.weather?.length) return null;
 
   return (
-    <>
+    <div className="relative bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+      <button
+        onClick={() => dispatch(toggleFavorite(city.id))}
+        className="absolute bottom-3 right-5 text-lg"
+        aria-label="Toggle favorite"
+      >
+        {isFavorite ? "⭐" : "☆"}
+      </button>
+
+      {/* Clickable card content */}
       <div
         onClick={() => dispatch(openCityDetail(city.id))}
-        className="bg-white rounded-xl p-4 shadow hover:shadow-md transition cursor-pointer"
+        className="cursor-pointer"
       >
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-medium">
+        <div className="flex items-center gap-3">
+          <h2 className="text-lg font-medium flex-1">
             {city.name}, {city.country}
           </h2>
           <img
             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-            alt=""
+            alt={weather.weather[0].description}
             className="w-12 h-12"
           />
         </div>
@@ -39,7 +51,7 @@ const CityCard = ({ city, weather }) => {
           <span>{weather.wind.speed}</span>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
