@@ -10,9 +10,10 @@ export const fetchCurrentWeather = createAsyncThunk(
 
             if (cached) {
                 const age = Date.now() - cached.fetchedAt;
-                if (age < 60_000) {
+                const isSameUnit = cached.units === units;
+                if (age < 60_000 && isSameUnit) {
                     // Data is fresh, skip fetch
-                    return cached.data;
+                    return cached;
                 }
             }
 
@@ -22,7 +23,7 @@ export const fetchCurrentWeather = createAsyncThunk(
                 units
             });
 
-            return { data, fetchedAt: Date.now() };
+            return { data, fetchedAt: Date.now(), units };
         } catch {
             return rejectWithValue("Failed to fetch current weather");
         }

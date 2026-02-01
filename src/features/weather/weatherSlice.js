@@ -21,7 +21,8 @@ const weatherSlice = createSlice({
 
                 state.current[action.meta.arg.city.id] = {
                     data: action.payload.data ?? action.payload,
-                    fetchedAt: action.payload.fetchedAt ?? Date.now()
+                    fetchedAt: action.payload.fetchedAt ?? Date.now(),
+                    units: action.payload.units ?? action.meta.arg.units
                 };
             })
             .addCase(fetchCurrentWeather.rejected, (state, action) => {
