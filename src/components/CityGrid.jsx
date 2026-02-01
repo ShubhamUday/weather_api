@@ -1,12 +1,15 @@
 import { useSelector } from "react-redux";
 import CityCard from "./CityCard";
 import LoadingCard from "./LoadingCard";
+import ErrorState from "./ErrorState";
 
 const CityGrid = () => {
   const cities = useSelector((state) => state.cities.list);
 
   // Weather slice
   const { current, loading, error } = useSelector((state) => state.weather);
+
+  if (error) return <ErrorState message={error} />;
 
   return (
     <>
