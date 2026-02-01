@@ -17,7 +17,7 @@ const Header = () => {
         {/* Unit toggle button */}
         <button
           onClick={() => dispatch(toggleUnit())}
-          className="px-3 py-1 rounded bg-gray-900 text-white text-sm"
+          className="px-3 py-1 rounded bg-gray-900 text-white text-sm cursor-pointer"
         >
           {unit === "metric" ? "°C" : "°F"}
         </button>
