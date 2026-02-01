@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { fetchCitySuggestions } from "../features/cities/citiesThunk";
 import { addCity } from "../features/cities/citiesSlice";
 
 const CitySearch = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   const { results, loading, error } = useSelector(
     (state) => state.cities.search,
@@ -14,8 +15,12 @@ const CitySearch = () => {
   const existingCities = useSelector((state) => state.cities.list);
 
   useEffect(() => {
-    if (query.trim().length < 2) return;
+    if (query.trim().length < 2) {
+      setIsOpen(false);
+      return;
+    }
     dispatch(fetchCitySuggestions(query));
+    setIsOpen(true);
   }, [query, dispatch]);
 
   const handleAddCity = (city) => {
@@ -35,6 +40,7 @@ const CitySearch = () => {
     );
 
     setQuery("");
+    setIsOpen(false);
   };
 
   return (
@@ -43,23 +49,26 @@ const CitySearch = () => {
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onFocus={() => {
+            if (query.trim().length >= 2) setIsOpen(true);
+          }}
           placeholder="Search city..."
           className="w-full px-4 py-2 border rounded"
         />
 
-        {loading && (
+        {isOpen && loading && (
           <div className="absolute w-full bg-white border mt-1 p-2 text-sm">
             Searching...
           </div>
         )}
 
-        {error && (
+        {isOpen && error && (
           <div className="absolute w-full bg-white border mt-1 p-2 text-sm text-red-500">
             {error}
           </div>
         )}
 
-        {results.length > 0 && !loading && (
+        {isOpen && results.length > 0 && !loading && (
           <ul className="absolute w-full bg-white border mt-1 rounded shadow z-10">
             {results.map((city) => (
               <li
