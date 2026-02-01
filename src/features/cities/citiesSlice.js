@@ -10,14 +10,26 @@ const DEFAULT_CITIES = [
   { id: "cpt", name: "Cape Town", country: "ZA", lat: -33.9249, lon: 18.4241 }
 ];
 
+const storedFavoriteCities = JSON.parse(
+  localStorage.getItem("favoriteCities") || "[]"
+);
+
 const storedFavorites = JSON.parse(
   localStorage.getItem("favorites") || "[]"
 );
 
+const mergeCities = (defaults, favorites) => {
+  const map = new Map();
+  [...defaults, ...favorites].forEach(city => {
+    map.set(city.id, city);
+  });
+  return Array.from(map.values());
+};
+
 const citiesSlice = createSlice({
   name: "cities",
   initialState: {
-    list: DEFAULT_CITIES,
+    list: mergeCities(DEFAULT_CITIES, storedFavoriteCities),
     favorites: storedFavorites,
     search: {
       results: [],
