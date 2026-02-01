@@ -11,6 +11,7 @@ const CityCard = ({ city, weather }) => {
 
   return (
     <div className="relative bg-white rounded-xl p-4 shadow hover:shadow-md transition">
+      {/* Favorite toggle button (star icon) */}
       <button
         onClick={() => dispatch(toggleFavorite(city.id))}
         className="absolute bottom-3 right-5 text-lg"
@@ -28,6 +29,8 @@ const CityCard = ({ city, weather }) => {
           <h2 className="text-lg font-medium flex-1">
             {city.name}, {city.country}
           </h2>
+
+          {/* Weather icon from OpenWeather API */}
           <img
             src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
             alt={weather.weather[0].description}
@@ -35,6 +38,7 @@ const CityCard = ({ city, weather }) => {
           />
         </div>
 
+        {/* Temperature + description */}
         <div className="mt-4">
           <p className="text-3xl font-semibold">
             {Math.round(weather.main.temp)}°

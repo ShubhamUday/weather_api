@@ -8,15 +8,22 @@ const CityDetailModal = () => {
 
   const { isDetailOpen, activeCityId } = useSelector((state) => state.ui);
   const cities = useSelector((state) => state.cities.list);
+
+  // Forecast cache + loading/error from weather slice
   const { forecast, loading, error } = useSelector((state) => state.weather);
 
   if (!isDetailOpen) return null;
 
+  // Find active city details using selected city ID
   const city = cities.find((c) => c.id === activeCityId);
+
+  // Get forecast data for this specific city
   const data = forecast[activeCityId];
 
   return (
+    // Overlay backdrop
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      {/* Modal container */}
       <div className="bg-white rounded-xl w-full max-w-4xl p-6 relative">
         <button
           onClick={() => dispatch(closeCityDetail())}
@@ -30,8 +37,10 @@ const CityDetailModal = () => {
         </h2>
 
         {loading && <p>Loading forecast...</p>}
+
         {error && <p className="text-red-500">{error}</p>}
 
+        {/* Charts render only when forecast exists */}
         {data && (
           <>
             <HourlyChart data={data.list} />

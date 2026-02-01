@@ -6,15 +6,20 @@ import { addCity } from "../features/cities/citiesSlice";
 const CitySearch = () => {
   const dispatch = useDispatch();
   const [query, setQuery] = useState("");
+
+  // Controls dropdown visibility
   const [isOpen, setIsOpen] = useState(false);
 
+  // Search slice state from Redux
   const { results, loading, error } = useSelector(
     (state) => state.cities.search,
   );
 
   const existingCities = useSelector((state) => state.cities.list);
 
+  // Effect runs whenever query changes
   useEffect(() => {
+    // If query too short → close dropdown and stop
     if (query.trim().length < 2) {
       setIsOpen(false);
       return;
@@ -23,12 +28,14 @@ const CitySearch = () => {
     setIsOpen(true);
   }, [query, dispatch]);
 
+  // Add selected city to dashboard
   const handleAddCity = (city) => {
     const exists = existingCities.some(
       (c) => c.lat === city.lat && c.lon === city.lon,
     );
     if (exists) return;
 
+    // Normalize city structure before saving to Redux
     dispatch(
       addCity({
         id: `${city.lat}-${city.lon}`,
@@ -46,9 +53,11 @@ const CitySearch = () => {
   return (
     <>
       <div className="relative max-w-md mx-auto mt-6">
+        {/* Search input */}
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          // Reopen dropdown if user focuses input again
           onFocus={() => {
             if (query.trim().length >= 2) setIsOpen(true);
           }}
@@ -68,6 +77,7 @@ const CitySearch = () => {
           </div>
         )}
 
+        {/* Results dropdown */}
         {isOpen && results.length > 0 && !loading && (
           <ul className="absolute w-full bg-white border mt-1 rounded shadow z-10">
             {results.map((city) => (
