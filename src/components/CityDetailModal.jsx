@@ -27,7 +27,7 @@ const CityDetailModal = () => {
       <div className="bg-white rounded-xl w-full max-w-4xl p-6 relative">
         <button
           onClick={() => dispatch(closeCityDetail())}
-          className="absolute right-4 top-4 text-gray-500"
+          className="absolute right-4 top-4 text-gray-500 cursor-pointer"
         >
           ✕
         </button>

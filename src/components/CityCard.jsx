@@ -4,6 +4,7 @@ import { openCityDetail } from "../features/ui/uiSlice";
 
 const CityCard = ({ city, weather }) => {
   const dispatch = useDispatch();
+
   const favorites = useSelector((state) => state.cities.favorites);
   const isFavorite = favorites.includes(city.id);
 
@@ -11,13 +12,23 @@ const CityCard = ({ city, weather }) => {
 
   return (
     <div className="relative bg-white rounded-xl p-4 shadow hover:shadow-md transition">
-      {/* Favorite toggle button (star icon) */}
+      {/* Favorite button (toggle)*/}
       <button
         onClick={() => dispatch(toggleFavorite(city.id))}
-        className="absolute bottom-3 right-5 text-lg"
         aria-label="Toggle favorite"
+        className={`
+          absolute bottom-2 right-3 
+          flex items-center justify-center 
+          text-lg font-semibold
+          transition-colors
+          ${
+            isFavorite
+              ? "text-yellow-500"
+              : "text-gray-400 hover:text-gray-200"
+          }
+        `}
       >
-        {isFavorite ? "⭐" : "☆"}
+        ☆
       </button>
 
       {/* Clickable card content */}
